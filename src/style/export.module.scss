@@ -1,0 +1,7 @@
+// 全局变量导出
+
+@import './variables.scss';
+
+:export {
+  bg-color: $bg-color;
+}
