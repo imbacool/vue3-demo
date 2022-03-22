@@ -23,18 +23,19 @@
 </template>
 
 <script setup>
-import { reactive, ref } from "@vue/reactivity";
+import { ref } from "@vue/reactivity";
 
-const menu_list = reactive([
+let menu_list = ref([
   { path: "/home", icon: "home-filled", name: "首页" },
   { path: "/user", icon: "user-filled", name: "用户管理" },
   { path: "/role", icon: "setting", name: "角色权限" },
   { path: "/order", icon: "list", name: "工单管理" },
 ]);
-const path = ref(sessionStorage.getItem("path") || "/home");
-const menu_click = (path) => {
+let path = ref(sessionStorage.getItem("path") || "/home");
+
+function menu_click(path) {
   sessionStorage.setItem("path", path);
-};
+}
 </script>
 
 <style lang="scss" scoped>

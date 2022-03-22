@@ -1,29 +1,65 @@
 <template>
-  <div>
-    <el-breadcrumb :separator-icon="'arrow-right'">
-      <el-breadcrumb-item :to="{ path: '/home' }">homepage</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/login' }"
-        >promotion management</el-breadcrumb-item
+  <div class="header">
+    <el-breadcrumb :separator-icon="'arrow-right'" class="breadcrumb">
+      <el-breadcrumb-item
+        v-for="item in breadcrumb_list"
+        :key="item.path"
+        :to="{ path: item.path }"
       >
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+        {{ item.meta.name }}
+      </el-breadcrumb-item>
     </el-breadcrumb>
+    <el-dropdown>
+      <span class="dropdown">
+        {{ user_info.name }}
+        <el-icon>
+          <arrow-down />
+        </el-icon>
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
   </div>
 </template>
 
 <script setup>
-import { watch } from "@vue/runtime-core";
+import { watch, ref, computed } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 const route = useRoute();
+const router = useRouter();
+const store = useStore();
+let user_info = computed(() => store.state.user_info);
+let breadcrumb_list = ref([]);
 
-const get_breadcrumb = () => {
-  console.log(route.matched);
-};
+function get_breadcrumb() {
+  // console.log(route.matched);
+  breadcrumb_list.value = route.matched.filter((item) => item.meta.name);
+  if (breadcrumb_list.value.length == 1) {
+    breadcrumb_list.value.unshift({
+      path: "/",
+      meta: { name: "导航" },
+    });
+  }
+}
+function logout() {
+  store.commit("logout");
+  router.push("/login");
+}
 
 get_breadcrumb();
 watch(route, get_breadcrumb);
 </script>
 
 <style lang="scss" scoped>
+.header {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 </style>

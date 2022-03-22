@@ -4,7 +4,7 @@
     <el-form
       :model="form"
       :rules="rules"
-      ref="form_ref"
+      ref="el_form"
       hide-required-asterisk
       class="form"
     >
@@ -19,25 +19,34 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="login">登录</el-button>
+        <el-button
+          type="primary"
+          @click="login"
+          :loading="btn_loading"
+          style="width: 100%"
+          >登录</el-button
+        >
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script setup>
-import { reactive, ref } from "@vue/reactivity";
+import { ref } from "@vue/reactivity";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import logo from "@img/logo.png";
 import user_api from "@api/user";
 import message from "@utils/message";
 
-const form = reactive({
+const router = useRouter();
+const store = useStore();
+let btn_loading = ref(false);
+let form = ref({
   username: "",
   password: "",
 });
-const rules = reactive({
+let rules = ref({
   username: [
     {
       required: true,
@@ -51,34 +60,30 @@ const rules = reactive({
       message: "密码不能为空",
       trigger: ["change", "blur"],
     },
-    { min: 3, max: 6, message: "密码必须包含3-6个字符", trigger: "blur" },
   ],
 });
-const form_ref = ref(null);
-const router = useRouter();
-const store = useStore();
-const login = async () => {
-  await form_ref.value.validate(async (valid, fields) => {
+let el_form = ref(null);
+
+async function login() {
+  await el_form.value.validate(async (valid, fields) => {
     if (valid) {
-      const { username, password } = form;
-      const { code, msg, data } = await user_api.login({
-        username,
-        password,
-      });
-      if (code === 200) {
+      let { username, password } = form.value;
+
+      btn_loading.value = true;
+      let { code, msg, data } = await user_api.login({ username, password });
+      if (code == 200) {
         message.success(msg);
-        sessionStorage.setItem("token", data.token);
-        store.commit("edit_user_info", data.user_info);
+        store.commit("login", data);
         router.push("/home");
       } else {
         message.error(msg);
       }
+      btn_loading.value = false;
     } else {
     }
   });
-};
+}
 </script>
-
 
 <style lang="scss" scoped>
 .login {
