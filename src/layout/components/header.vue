@@ -11,7 +11,7 @@
     </el-breadcrumb>
     <el-dropdown>
       <span class="dropdown">
-        {{ user_info.name }}
+        {{ user_detail.name }}
         <el-icon>
           <arrow-down />
         </el-icon>
@@ -33,7 +33,7 @@ import { useStore } from "vuex";
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
-let user_info = computed(() => store.state.user_info);
+let user_detail = computed(() => store.state.user_detail);
 let breadcrumb_list = ref([]);
 
 function get_breadcrumb() {

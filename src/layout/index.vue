@@ -38,9 +38,9 @@ import Menu from "./components/menu.vue";
   }
   .container {
     height: 100vh;
-    // .main {
-    //   background-color: #e4e7ed;
-    // }
+    .main {
+      padding-top: 0;
+    }
   }
 }
 </style>

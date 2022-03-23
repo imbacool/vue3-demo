@@ -74,7 +74,7 @@ async function login() {
       if (code == 200) {
         message.success(msg);
         store.commit("login", data);
-        router.push("/home");
+        router.push("/user");
       } else {
         message.error(msg);
       }
