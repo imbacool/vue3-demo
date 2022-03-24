@@ -1,6 +1,6 @@
 <template>
   <div class="user-list">
-    <el-button type="primary" icon="circle-plus" @click="add">新增</el-button>
+    <el-button type="primary" icon="plus" @click="add">新增</el-button>
     <el-button
       type="primary"
       icon="edit"
@@ -18,13 +18,13 @@
         >
       </template>
     </el-popconfirm>
+    <el-button icon="refresh" circle @click="get_user_list" />
     <el-table
+      class="table-custom"
       v-loading="table_loading"
       :data="tableData"
-      style="width: 100%; margin: 15px 0"
       height="calc(100vh - 180px)"
       stripe
-      highlight-current-row
       border
       @selection-change="handleSelectionChange"
     >
@@ -76,7 +76,6 @@
       </el-table-column>
     </el-table>
     <el-pagination
-      style="float: right"
       v-model:currentPage="page.current"
       v-model:page-size="page.size"
       :total="page.total"
@@ -89,7 +88,7 @@
 
 <script setup>
 import { reactive, ref } from "@vue/reactivity";
-import { watch } from "@vue/runtime-core";
+import { onMounted, watch } from "@vue/runtime-core";
 import { useRouter } from "vue-router";
 import user_api from "@api/user";
 
@@ -103,7 +102,9 @@ let page = reactive({
   total: 12,
 });
 watch(page, get_user_list);
-get_user_list();
+onMounted(() => {
+  get_user_list();
+});
 
 async function get_user_list() {
   table_loading.value = true;
@@ -140,6 +141,4 @@ function handleDelete(index, row) {
 </script>
 
 <style lang="scss" scoped>
-// .user-list {
-// }
 </style>

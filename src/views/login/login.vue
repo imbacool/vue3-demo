@@ -16,14 +16,16 @@
           v-model="form.password"
           show-password
           placeholder="请输入密码"
+          @keyup.enter="login"
         />
       </el-form-item>
       <el-form-item>
         <el-button
+          class="block"
           type="primary"
           @click="login"
           :loading="btn_loading"
-          style="width: 100%"
+          icon="key"
           >登录</el-button
         >
       </el-form-item>
@@ -38,6 +40,7 @@ import { useStore } from "vuex";
 import logo from "@img/logo.png";
 import user_api from "@api/user";
 import message from "@utils/message";
+import login_validate from "./login_validate";
 
 const router = useRouter();
 const store = useStore();
@@ -46,22 +49,7 @@ let form = ref({
   username: "",
   password: "",
 });
-let rules = ref({
-  username: [
-    {
-      required: true,
-      message: "账号不能为空",
-      trigger: ["change", "blur"],
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: "密码不能为空",
-      trigger: ["change", "blur"],
-    },
-  ],
-});
+let rules = ref(login_validate);
 let el_form = ref(null);
 
 async function login() {

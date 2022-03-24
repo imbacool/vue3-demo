@@ -11,6 +11,7 @@
     </el-breadcrumb>
     <el-dropdown>
       <span class="dropdown">
+        <el-icon><user /></el-icon>
         {{ user_detail.name }}
         <el-icon>
           <arrow-down />
@@ -18,7 +19,9 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
+          <el-dropdown-item @click="logout" icon="switch-button"
+            >退出登录</el-dropdown-item
+          >
         </el-dropdown-menu>
       </template>
     </el-dropdown>
