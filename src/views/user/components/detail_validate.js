@@ -1,15 +1,29 @@
 export default {
-  username: [
+  name: [
     {
       required: true,
-      message: "账号不能为空",
+      message: "姓名不能为空",
       trigger: ["change", "blur"],
     },
   ],
-  password: [
+  gender: [
     {
       required: true,
-      message: "密码不能为空",
+      message: "性别不能为空",
+      trigger: ["change", "blur"],
+    },
+  ],
+  date: [
+    {
+      required: true,
+      message: "出生日期不能为空",
+      trigger: ["change", "blur"],
+    },
+  ],
+  address: [
+    {
+      required: true,
+      message: "地址不能为空",
       trigger: ["change", "blur"],
     },
   ],

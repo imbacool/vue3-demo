@@ -19,7 +19,7 @@ export default [
       },
       {
         path: 'add',
-        meta: { name: '添加' },
+        meta: { name: '新增' },
         component: UserAdd
       },
       {

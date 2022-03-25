@@ -1,3 +1,5 @@
+import store from '@store';
+
 export default {
   login() {
     return new Promise((resolve, reject) => {
@@ -18,7 +20,7 @@ export default {
       setTimeout(() => {
         resolve({
           code: 200,
-          msg: 'get_user_detail',
+          msg: '查询成功',
           data: { name: 'ImbaCOOL' },
         })
       }, 0);
@@ -26,135 +28,28 @@ export default {
   },
   get_user_list() {
     return new Promise((resolve, reject) => {
-      let data = [
-        {
-          name: "张三",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "李四",
-          gender: {
-            id: 0,
-            name: "女",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: false,
-        },
-        {
-          name: "王五",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "老六",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "张三",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "李四",
-          gender: {
-            id: 0,
-            name: "女",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: false,
-        },
-        {
-          name: "王五",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "老六",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "张三",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "李四",
-          gender: {
-            id: 0,
-            name: "女",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: false,
-        },
-        {
-          name: "王五",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-        {
-          name: "老六",
-          gender: {
-            id: 1,
-            name: "男",
-          },
-          date: "2022-03-23",
-          address: "No. 189, Grove St, Los Angeles",
-          status: true,
-        },
-      ]
       setTimeout(() => {
         resolve({
           code: 200,
-          msg: 'get_user_list',
-          data,
+          msg: '查询成功',
+          data: store.state.user_list,
         })
       }, 1000);
     })
-  }
+  },
+  add_user(data) {
+    return new Promise((resolve, reject) => {
+      store.commit(
+        "add_user",
+        Object.assign(data, { status: true })
+      );
+      setTimeout(() => {
+        resolve({
+          code: 200,
+          msg: '新增成功',
+          data: null,
+        })
+      }, 1000);
+    })
+  },
 }

@@ -20,7 +20,6 @@
     </el-popconfirm>
     <el-button icon="refresh" circle @click="get_user_list" />
     <el-table
-      class="table-custom"
       v-loading="table_loading"
       :data="tableData"
       height="calc(100vh - 180px)"
